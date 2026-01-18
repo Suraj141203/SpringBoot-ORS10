@@ -99,11 +99,15 @@ public class UserDAOImpl extends BaseDAOImpl<UserDTO> implements UserDAOInt {
 	}
 
 	public void delete(UserDTO dto, UserContext userContext) {
+		if (dto.getImageId() != null) {
+			Long id = dto.getImageId();
+			System.out.println(id);
+			AttachmentDTO attachmentDto = attachmentService.findByPK(id, userContext);
+			attachmentService.delete(attachmentDto, userContext);
+
+		}
 		super.delete(dto, userContext);
-		Long id = dto.getImageId();
-		System.out.println(id);
-		AttachmentDTO attachmentDto = attachmentService.findByPK(id, userContext);
-		attachmentService.delete(attachmentDto, userContext);
+
 	}
 
 	@Override

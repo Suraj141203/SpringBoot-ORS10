@@ -289,7 +289,7 @@ public class UserCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 				out.write(attachmentDTO.getDoc());
 				out.close();
 				
-				System.out.println("Profile pic......rahul");
+				System.out.println("Profile pic......suraj");
 			} else {
 				response.getWriter().write("ERROR: File not found");
 			}

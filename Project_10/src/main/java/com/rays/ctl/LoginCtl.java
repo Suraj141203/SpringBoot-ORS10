@@ -78,46 +78,58 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 	}
 
 	@PostMapping("login")
-	public ORSResponse login(@RequestBody @Valid LoginForm form, BindingResult bindingResult, HttpSession session,
-			HttpServletRequest request) throws Exception {
-		System.out.println("loginCtl ki login API ko hit kiya");
-		ORSResponse res = validate(bindingResult);
+	public ORSResponse login(@RequestBody @Valid LoginForm form,
+	        BindingResult bindingResult,
+	        HttpSession session,
+	        HttpServletRequest request) {
 
-		if (!res.isSuccess()) {
-			return res;
-		}
+	    System.out.println("loginCtl ki login API ko hit kiya");
 
-		UserDTO dto = baseService.authenticate(form.getLoginId(), form.getPassword());
-		if (dto == null) {
-			System.out.println("dto == null ");
-			res.setSuccess(false);
-			res.addMessage("Invalid ID or Password");
-		} else {
-			UserContext context = new UserContext(dto);
+	    ORSResponse res = new ORSResponse();
 
-//			 session.setAttribute("userContext", context); 				
+	    try {
 
-			session.setAttribute("test", dto.getFirstName());
+	        res = validate(bindingResult);
+	        if (!res.isSuccess()) {
+	            return res;
+	        }
 
-			res.setSuccess(true);
-			res.addData(dto);
-			res.addResult("jsessionid", session.getId());
-			res.addResult("loginId", dto.getLoginId());
-			res.addResult("role", dto.getRoleName());
-			res.addResult("fname", dto.getFirstName());
-			res.addResult("lname", dto.getLastName());
+	        UserDTO dto = baseService.authenticate(
+	                form.getLoginId(),
+	                form.getPassword());
 
-			/* System.out.println("jsessionid " + session.getId()); */
-			System.out.println("Before calling userDetail authenticate");
+	        if (dto == null) {
+	            System.out.println("dto == null ");
+	            res.setSuccess(false);
+	            res.addMessage("Invalid ID or Password");
+	            return res;
+	        }
 
-			final String token = jwtUtil.generateToken(dto.getLoginId());
+	        // SUCCESS CASE
+	        session.setAttribute("test", dto.getFirstName());
 
-			res.addResult("token", token);
-			return res;
+	        res.setSuccess(true);
+	        res.addData(dto);
+	        res.addResult("jsessionid", session.getId());
+	        res.addResult("loginId", dto.getLoginId());
+	        res.addResult("role", dto.getRoleName());
+	        res.addResult("fname", dto.getFirstName());
+	        res.addResult("lname", dto.getLastName());
 
-		}
+	        final String token = jwtUtil.generateToken(dto.getLoginId());
+	        res.addResult("token", token);
 
-		return res;
+	        return res;
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace(); // backend log ke liye
+
+	        res.setSuccess(false);
+	        res.addMessage("Internal Server is down. Please try again later.");
+
+	        return res;
+	    }
 	}
 
 	/**
