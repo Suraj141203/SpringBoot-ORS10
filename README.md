@@ -1,11 +1,10 @@
 # 🚀 ORS Backend (Spring Boot)
 
-![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?style=for-the-badge&logo=springboot)
+![Java](https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.x.2-brightgreen?style=for-the-badge&logo=springboot)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/Suraj141203/ORS-SpringBoot?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/Suraj141203/ORS-SpringBoot?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ---
 
@@ -29,7 +28,7 @@ It provides secure, scalable APIs for the ORS (Online Registration System / Onli
 
 ## 🛠️ Tech Stack
 
-- **Java (JDK 17)**  
+- **Java (JDK 11)**  
 - **Spring Boot**  
 - **Spring MVC**  
 - **Spring Data JPA / Hibernate**  
