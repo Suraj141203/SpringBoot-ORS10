@@ -78,4 +78,5 @@ public class ORSResponse {
 	public void addMessage(Object value) {
 		result.put(MESSAGE, value);
 	}
+
 }

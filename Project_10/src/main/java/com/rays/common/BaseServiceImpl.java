@@ -32,7 +32,6 @@ public abstract class BaseServiceImpl<T extends BaseDTO, D extends BaseDAOInt<T>
 		// T dto baseDao.findByPK(Class<T>, pk)
 		return dto;
 	}
-	
 	@Transactional(readOnly = true)
 	public T findByUniqueKey(String att, String val, UserContext userContext) {
 		T dto = baseDao.findByUniqueKey(att, val, userContext);
@@ -97,6 +96,6 @@ public abstract class BaseServiceImpl<T extends BaseDTO, D extends BaseDAOInt<T>
 		baseDao.delete(dto, userContext);
 		log.debug("Base Service delete End");
 		return dto;
-	}
 
+	}
 }

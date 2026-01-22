@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 import com.rays.common.BaseForm;
 import com.rays.dto.CustomerDTO;
 
+//CustomerForm
+
 public class CustomerForm extends BaseForm {
 
 	@NotEmpty(message = "please enter clientName")
@@ -26,6 +28,8 @@ public class CustomerForm extends BaseForm {
 	public String getClientName() {
 		return clientName;
 	}
+	
+	
 
 	public void setClientName(String clientName) {
 		this.clientName = clientName;

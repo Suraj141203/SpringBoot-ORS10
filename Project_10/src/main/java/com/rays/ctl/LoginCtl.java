@@ -1,9 +1,11 @@
 package com.rays.ctl;
 
 import java.util.Enumeration;
+
 import java.util.LinkedHashSet;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -55,7 +57,6 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 	@Autowired
 	private JWTUtil jwtUtil;
 
-
 	@Autowired
 	AttachmentServiceInt attachmentService;
 
@@ -78,58 +79,48 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 	}
 
 	@PostMapping("login")
-	public ORSResponse login(@RequestBody @Valid LoginForm form,
-	        BindingResult bindingResult,
-	        HttpSession session,
-	        HttpServletRequest request) {
+	public ORSResponse login(@RequestBody @Valid LoginForm form, BindingResult bindingResult, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
-	    System.out.println("loginCtl ki login API ko hit kiya");
+		System.out.println("loginCtl ki login API ko hit kiya");
 
-	    ORSResponse res = new ORSResponse();
+		ORSResponse res = new ORSResponse();
 
-	    try {
+		
 
-	        res = validate(bindingResult);
-	        if (!res.isSuccess()) {
-	            return res;
-	        }
+			res = validate(bindingResult);
+			if (!res.isSuccess()) {
+				return res;
+			}
 
-	        UserDTO dto = baseService.authenticate(
-	                form.getLoginId(),
-	                form.getPassword());
+			UserDTO dto = baseService.authenticate(form.getLoginId(), form.getPassword());
 
-	        if (dto == null) {
-	            System.out.println("dto == null ");
-	            res.setSuccess(false);
-	            res.addMessage("Invalid ID or Password");
-	            return res;
-	        }
+			if (dto == null) {
+				System.out.println("dto == null ");
+				res.setSuccess(false);
+				res.addMessage("Invalid ID or Password");
+				return res;
+			}
 
-	        // SUCCESS CASE
-	        session.setAttribute("test", dto.getFirstName());
+			// SUCCESS CASE
+			session.setAttribute("test", dto.getFirstName());
 
-	        res.setSuccess(true);
-	        res.addData(dto);
-	        res.addResult("jsessionid", session.getId());
-	        res.addResult("loginId", dto.getLoginId());
-	        res.addResult("role", dto.getRoleName());
-	        res.addResult("fname", dto.getFirstName());
-	        res.addResult("lname", dto.getLastName());
+			res.setSuccess(true);
+			res.addData(dto);
+			res.addResult("jsessionid", session.getId());
+			res.addResult("loginId", dto.getLoginId());
+			res.addResult("role", dto.getRoleName());
+			res.addResult("fname", dto.getFirstName());
+			res.addResult("lname", dto.getLastName());
 
-	        final String token = jwtUtil.generateToken(dto.getLoginId());
-	        res.addResult("token", token);
+			final String token = jwtUtil.generateToken(dto.getLoginId());
+			res.addResult("token", token);
 
-	        return res;
+			response.setStatus(HttpServletResponse.SC_OK); // 200
+			
+			return res;
 
-	    } catch (Exception e) {
-
-	        e.printStackTrace(); // backend log ke liye
-
-	        res.setSuccess(false);
-	        res.addMessage("Internal Server is down. Please try again later.");
-
-	        return res;
-	    }
+		
 	}
 
 	/**
@@ -148,7 +139,7 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 		}
 		ORSResponse res = new ORSResponse(true);
 		UserDTO dto = this.baseService.forgotPassword(login);
-		if (dto == null){
+		if (dto == null) {
 			res.setSuccess(false);
 			res.addMessage("Invalid Login Id");
 		} else {

@@ -45,6 +45,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	 */
 	public T findByUniqueKey(String attribute, Object val, UserContext userContext) {
 		System.out.println("findByUniqueKey in BaseDaoImp ");
+		
 		Class<T> dtoClass = getDTOClass();
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -54,8 +55,10 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		Root<T> qRoot = cq.from(dtoClass);
 
 		Predicate condition = builder.equal(qRoot.get(attribute), val);
+		
 
 		if (userContext != null && !isZeroNumber(userContext.getOrgId())) {
+			
 			Predicate conditionGrp = builder.equal(qRoot.get("orgId"), userContext.getOrgId());
 			cq.where(condition, conditionGrp);
 		} else {
@@ -69,6 +72,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		T dto = null;
 
 		if (list.size() > 0) {
+			
 			dto = list.get(0);
 		}
 
@@ -92,7 +96,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		System.out.println("BaseDao createCriteria run");
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-
+		
 		// Create criteria
 		CriteriaQuery<T> cq = builder.createQuery(getDTOClass());
 

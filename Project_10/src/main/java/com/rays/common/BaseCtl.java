@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.rays.dto.MarksheetDTO;
 import com.rays.dto.UserDTO;
 
 /**
@@ -44,11 +45,11 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 	protected static final String OP_GO = "Go";
 	protected static final String OP_GET = "Get";
 
-	@Autowired
+	@Autowired		
 	protected S baseService;
 
 	@Value("${page.size}")
-	private int pageSize;
+	private int pageSize ;
 
 	/**
 	 * Contains context of logged-in user
@@ -97,7 +98,7 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 	 * @return
 	 */
 	@GetMapping("get/{id}")
-	public ORSResponse get(@PathVariable long id) {
+	public ORSResponse get(@PathVariable long id) {							
 
 		System.out.println("BaseCtl Get() method run.......Rahul");
 
@@ -107,8 +108,10 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 		if (dto != null) {
 			res.addData(dto);
 		} else {
-			res.setSuccess(false);
+			
 
+			res.setSuccess(false);
+			
 			res.addMessage("Record not found");
 		}
 		System.out.println("Edit response :" + res);
@@ -135,11 +138,10 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 		}
 		return res;
 	}
-
+	
 	@PostMapping("deleteMany/{ids}")
-	public ORSResponse deleteMany(@PathVariable String[] ids, @RequestParam("pageNo") String pageNo,
-			@RequestBody F form) {
-		System.out.println("BaseCtl DeleteMany() method....Suraj... run");
+	public ORSResponse deleteMany(@PathVariable String[] ids, @RequestParam("pageNo") String pageNo,@RequestBody F form) {
+		System.out.println("BaseCtl DeleteMany() method....Rahul... run");
 		ORSResponse res = new ORSResponse(true);
 		try {
 
@@ -154,8 +156,7 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 			// System.out.println("dto ::" + dto.getClass());
 			// if(dto!=null)
 
-			// List<T> list = baseService.search(dto, Integer.parseInt(pageNo), pageSize,
-			// userContext);
+			//	List<T> list = baseService.search(dto, Integer.parseInt(pageNo), pageSize, userContext);
 
 			// System.out.println("List ::" + list);
 
@@ -191,7 +192,7 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 
 		if (OP_NEXT.equals(operation)) {
 			pageNo++;
-		} else if (OP_PREVIOUS.equals(operation)) {
+		} else if (OP_PREVIOUS.equals(operation)) {	
 			pageNo--;
 		}
 
@@ -214,24 +215,25 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 		// 0 is first page index
 		pageNo = (pageNo < 0) ? 0 : pageNo;
 
+
 		T dto = (T) form.getDto();
 
 		ORSResponse res = new ORSResponse(true);
 
 		List list = baseService.search(dto, pageNo, pageSize, userContext);
-
+		
 		res.addData(list);
 
 		List nextList = baseService.search(dto, pageNo + 1, pageSize, userContext);
-
+		
 		res.addResult("nextList", nextList.size());
-
+		
 		return res;
 	}
 
 	@PostMapping("/save")
 	public ORSResponse save(@RequestBody @Valid F form, BindingResult bindingResult) {
-		System.out.println("228save() run in BaseCtl :: +suraj " + form);
+		System.out.println("228save() run in BaseCtl :: +vipin " + form);
 		ORSResponse res = validate(bindingResult);
 
 		if (res.isSuccess() == false) {
@@ -246,7 +248,7 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 					res.addMessage(dto.getLabel() + " already exist");
 					res.setSuccess(false);
 					return res;
-				}
+				}	
 				baseService.update(dto, userContext);
 
 			} else {
@@ -281,7 +283,7 @@ public abstract class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends B
 	public ORSResponse validate(BindingResult bindingResult) {
 		ORSResponse res = new ORSResponse(true);
 		System.out.println("inside the validate method of baseCtl");
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {											
 			System.out.println("BaseCtl ki validate ke error block me");
 			res.setSuccess(false);
 

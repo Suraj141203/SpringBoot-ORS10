@@ -73,6 +73,7 @@ public interface BaseDAOInt<T extends BaseDTO> {
 	public List runHQL(String hql, UserContext userContext);
 	
 	public void setEntityManager(EntityManager entityManager);
+	
 
 
 }

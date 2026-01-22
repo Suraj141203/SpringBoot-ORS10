@@ -7,6 +7,8 @@ import com.rays.common.BaseServiceImpl;
 import com.rays.dao.CustomerDAOInt;
 import com.rays.dto.CustomerDTO;
 
+//CustomerServiceImpl
+
 @Service
 @Transactional
 public class CustomerServiceImpl extends BaseServiceImpl<CustomerDTO, CustomerDAOInt> implements CustomerServiceInt{

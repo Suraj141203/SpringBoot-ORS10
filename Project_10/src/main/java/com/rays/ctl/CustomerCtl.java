@@ -16,6 +16,8 @@ import com.rays.dto.CustomerDTO;
 import com.rays.form.CustomerForm;
 import com.rays.service.CustomerServiceInt;
 
+//CustomerCtl
+
 @RestController
 @RequestMapping(value = "Customer")
 public class CustomerCtl extends BaseCtl<CustomerForm, CustomerDTO, CustomerServiceInt> { 

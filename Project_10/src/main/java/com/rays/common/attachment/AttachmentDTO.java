@@ -2,8 +2,10 @@ package com.rays.common.attachment;
 
 import java.io.IOException;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 

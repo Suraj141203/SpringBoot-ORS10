@@ -21,6 +21,8 @@ public class CartForm extends BaseForm {
 
 	@NotNull(message = "please enter quantityOrdered")
 	private Integer quantityOrdered;
+	
+	
 
 	public String getCustomerName() {
 		return customerName;

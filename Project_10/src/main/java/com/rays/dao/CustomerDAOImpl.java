@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.rays.common.BaseDAOImpl;
 import com.rays.dto.CustomerDTO;
 
+//CustomerDAOImpl
+
 @Repository
 public class CustomerDAOImpl extends BaseDAOImpl<CustomerDTO> implements CustomerDAOInt {
 
