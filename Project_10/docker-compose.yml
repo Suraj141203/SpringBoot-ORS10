@@ -22,7 +22,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: ../Dockerfile
     container_name: ors-backend
     restart: always
     depends_on:
