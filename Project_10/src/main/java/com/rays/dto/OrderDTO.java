@@ -74,13 +74,13 @@ public class OrderDTO extends BaseDTO {
 
 	@Override
 	public String getUniqueValue() {
-		// TODO Auto-generated method stub
+		
 		return "productName";
 	}
 
 	@Override
 	public String getLabel() {
-		// TODO Auto-generated method stub
+		
 		return "productName";
 	}
 
