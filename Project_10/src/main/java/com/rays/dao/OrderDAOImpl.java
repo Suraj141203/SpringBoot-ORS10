@@ -43,7 +43,7 @@ public class OrderDAOImpl extends BaseDAOImpl<OrderDTO> implements OrderDAOInt {
 
 	@Override
 	public Class<OrderDTO> getDTOClass() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method
 		return OrderDTO.class;
 	}
 
